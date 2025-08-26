@@ -8,7 +8,7 @@ plugins {
 
 android {
     namespace = "com.waqas.realestateapptask"
-    compileSdk = 35
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.waqas.realestateapptask"

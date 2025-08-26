@@ -1,23 +1,23 @@
 [versions]
 # Core
-agp = "8.9.1"
-kotlin = "2.0.21"
-coreKtx = "1.16.0"
+agp = "8.9.3"
+kotlin = "2.1.10"
+coreKtx = "1.17.0"
 
 # Lifecycle
-lifecycleRuntimeKtx = "2.8.7"
+lifecycleRuntimeKtx = "2.9.2"
 
 # Compose
 activityCompose = "1.10.1"
-composeBom = "2024.09.00"
+composeBom = "2025.08.00"
 
 # Testing
 junit = "4.13.2"
-junitVersion = "1.2.1"
-espressoCore = "3.6.1"
+junitVersion = "1.3.0"
+espressoCore = "3.7.0"
 
 # Hilt
-hilt = "2.51.1"
+hilt = "2.55"
 hiltNavigationCompose = "1.2.0"
 
 # Retrofit + OkHttp + Moshi
@@ -25,13 +25,13 @@ retrofit = "2.9.0"
 okhttp = "4.12.0"
 
 # Room
-room = "2.6.1"
+room = "2.7.2"
 
 # Coroutines
 coroutines = "1.9.0"
 
 # Navigation
-navigationCompose = "2.8.4"
+navigationCompose = "2.9.3"
 
 # Coil
 coil = "2.7.0"

@@ -240,7 +240,7 @@ fun PropertyDetailScreen(
 
                             Spacer(modifier = Modifier.height(16.dp))
 
-                            // Yellow call button
+                            //Call button
                             Button(
                                 onClick = { /* Handle call */ },
                                 modifier = Modifier.fillMaxWidth(),

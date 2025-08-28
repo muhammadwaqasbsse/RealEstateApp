@@ -2,7 +2,7 @@ package com.waqas.immobilien.data.remote
 
 data class PropertyListResponse(
     val items: List<PropertyDetail>,
-    val totalCount: Int
+    val totalCount: Int,
 )
 
 data class PropertyDetail(
@@ -15,5 +15,5 @@ data class PropertyDetail(
     val professional: String,
     val propertyType: String,
     val offerType: Int,
-    val rooms: Int? = null
+    val rooms: Int? = null,
 )

@@ -15,7 +15,6 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
-
     private const val BASE_URL = "https://gsl-apps-technical-test.dignp.com/"
 
     @Provides
@@ -28,7 +27,8 @@ object NetworkModule {
     @Provides
     @Singleton
     fun provideOkHttpClient(logging: HttpLoggingInterceptor): OkHttpClient =
-        OkHttpClient.Builder()
+        OkHttpClient
+            .Builder()
             .addInterceptor(logging)
             .build()
 
@@ -38,8 +38,12 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideRetrofit(client: OkHttpClient, moshi: Moshi): Retrofit =
-        Retrofit.Builder()
+    fun provideRetrofit(
+        client: OkHttpClient,
+        moshi: Moshi,
+    ): Retrofit =
+        Retrofit
+            .Builder()
             .baseUrl(BASE_URL)
             .client(client)
             .addConverterFactory(MoshiConverterFactory.create(moshi))
@@ -47,6 +51,5 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun providePropertyApi(retrofit: Retrofit): PropertyApi =
-        retrofit.create(PropertyApi::class.java)
+    fun providePropertyApi(retrofit: Retrofit): PropertyApi = retrofit.create(PropertyApi::class.java)
 }

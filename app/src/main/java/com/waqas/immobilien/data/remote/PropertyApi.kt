@@ -8,5 +8,7 @@ interface PropertyApi {
     suspend fun fetchProperties(): PropertyListResponse
 
     @GET("listings/{id}.json")
-    suspend fun fetchPropertyDetail(@Path("id") id: Int): PropertyDetail
+    suspend fun fetchPropertyDetail(
+        @Path("id") id: Int,
+    ): PropertyDetail
 }

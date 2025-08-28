@@ -12,10 +12,7 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object RepositoryModule {
-
     @Provides
     @Singleton
-    fun providePropertyRepository(
-        propertyApi: PropertyApi
-    ): PropertyRepository = PropertyRepositoryImpl(propertyApi)
+    fun providePropertyRepository(propertyApi: PropertyApi): PropertyRepository = PropertyRepositoryImpl(propertyApi)
 }

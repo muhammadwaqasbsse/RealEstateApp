@@ -13,8 +13,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.waqas.immobilien.presentation.ui.screen.PropertyDetailScreen
 import com.waqas.immobilien.presentation.ui.screen.ListingScreen
+import com.waqas.immobilien.presentation.ui.screen.PropertyDetailScreen
 import com.waqas.immobilien.presentation.ui.theme.ImmobilienAppTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -27,7 +27,7 @@ class MainActivity : ComponentActivity() {
             ImmobilienAppTheme {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
+                    color = MaterialTheme.colorScheme.background,
                 ) {
                     ImmobilienAppUI()
                 }
@@ -45,14 +45,14 @@ fun ImmobilienAppUI() {
             ListingScreen(
                 onItemClick = { id ->
                     navController.navigate("detail/$id")
-                }
+                },
             )
         }
         composable("detail/{id}") { backStackEntry ->
             val id = backStackEntry.arguments?.getString("id")?.toIntOrNull() ?: 0
             PropertyDetailScreen(
                 id = id,
-                onBackClick = { navController.popBackStack() }
+                onBackClick = { navController.popBackStack() },
             )
         }
     }

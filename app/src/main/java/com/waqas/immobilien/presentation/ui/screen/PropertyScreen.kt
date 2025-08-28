@@ -53,7 +53,7 @@ import com.waqas.immobilien.presentation.viewmodel.property.PropertyListViewMode
 @Composable
 fun ListingScreen(
     viewModel: PropertyListViewModel = hiltViewModel(),
-    onItemClick: (Int) -> Unit
+    onItemClick: (Int) -> Unit,
 ) {
     val state by viewModel.state.collectAsState()
     val context = LocalContext.current
@@ -68,51 +68,54 @@ fun ListingScreen(
             TopAppBar(
                 title = {
                     Text(
-                        text = "Real Estate App",
+                        text = "Immobilien",
                         style = MaterialTheme.typography.titleLarge,
-                        color = MaterialTheme.colorScheme.onBackground
+                        color = MaterialTheme.colorScheme.onBackground,
                     )
                 },
-                modifier = Modifier.statusBarsPadding()
+                modifier = Modifier.statusBarsPadding(),
             )
-        }
+        },
     ) { innerPadding ->
         Column(
-            modifier = Modifier
-                .padding(innerPadding)
-                .fillMaxSize()
-                .background(MaterialTheme.colorScheme.background)
+            modifier =
+                Modifier
+                    .padding(innerPadding)
+                    .fillMaxSize()
+                    .background(MaterialTheme.colorScheme.background),
         ) {
             // Search Bar
             TextField(
                 value = searchQuery,
                 onValueChange = { searchQuery = it },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(12.dp),
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .padding(12.dp),
                 placeholder = {
                     Text(
                         text = "Search properties...",
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
                 },
-                colors = TextFieldDefaults.colors(
-                    focusedContainerColor = MaterialTheme.colorScheme.surface,
-                    unfocusedContainerColor = MaterialTheme.colorScheme.surface,
-                    disabledContainerColor = MaterialTheme.colorScheme.surface,
-                    focusedIndicatorColor = Color.Transparent,
-                    unfocusedLeadingIconColor = Color.Transparent
-                ),
+                colors =
+                    TextFieldDefaults.colors(
+                        focusedContainerColor = MaterialTheme.colorScheme.surface,
+                        unfocusedContainerColor = MaterialTheme.colorScheme.surface,
+                        disabledContainerColor = MaterialTheme.colorScheme.surface,
+                        focusedIndicatorColor = Color.Transparent,
+                        unfocusedLeadingIconColor = Color.Transparent,
+                    ),
                 shape = MaterialTheme.shapes.medium,
                 textStyle = MaterialTheme.typography.bodyMedium,
-                singleLine = true
+                singleLine = true,
             )
 
             when {
                 state.isLoading -> {
                     Box(
                         modifier = Modifier.fillMaxSize(),
-                        contentAlignment = Alignment.Center
+                        contentAlignment = Alignment.Center,
                     ) {
                         CircularProgressIndicator(color = MaterialTheme.colorScheme.primary)
                     }
@@ -120,29 +123,30 @@ fun ListingScreen(
                 state.properties.isEmpty() -> {
                     StateMessageView(
                         "No properties found",
-                        onRetry = { viewModel.onEvent(PropertyListEvent.LoadingPropertyList) }
+                        onRetry = { viewModel.onEvent(PropertyListEvent.LoadingPropertyList) },
                     )
                 }
                 state.error != null -> {
                     StateMessageView(
                         "Error: ${state.error}",
-                        onRetry = { viewModel.onEvent(PropertyListEvent.LoadingPropertyList) }
+                        onRetry = { viewModel.onEvent(PropertyListEvent.LoadingPropertyList) },
                     )
                 }
                 else -> {
-                    val filterListings = if (searchQuery.isBlank()) {
-                        state.properties
-                    } else {
-                        state.properties.filter { listings ->
-                            listings.city.contains(searchQuery, ignoreCase = true) ||
+                    val filterListings =
+                        if (searchQuery.isBlank()) {
+                            state.properties
+                        } else {
+                            state.properties.filter { listings ->
+                                listings.city.contains(searchQuery, ignoreCase = true) ||
                                     listings.propertyType.contains(searchQuery, ignoreCase = true)
+                            }
                         }
-                    }
 
                     LazyColumn(
                         state = rememberLazyListState(),
                         contentPadding = PaddingValues(horizontal = 8.dp, vertical = 8.dp),
-                        verticalArrangement = Arrangement.spacedBy(16.dp)
+                        verticalArrangement = Arrangement.spacedBy(16.dp),
                     ) {
                         items(filterListings) { listing ->
                             PropertyItem(listing) { onItemClick(listing.id) }
@@ -155,11 +159,12 @@ fun ListingScreen(
                 viewModel.effect.collect { effect ->
                     when (effect) {
                         is Effect.ShowToast -> {
-                            Toast.makeText(
-                                context,
-                                effect.message,
-                                Toast.LENGTH_SHORT
-                            ).show()
+                            Toast
+                                .makeText(
+                                    context,
+                                    effect.message,
+                                    Toast.LENGTH_SHORT,
+                                ).show()
                         }
                     }
                 }
@@ -171,39 +176,41 @@ fun ListingScreen(
 @Composable
 fun StateMessageView(
     message: String,
-    onRetry: () -> Unit
+    onRetry: () -> Unit,
 ) {
     Box(
         modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
+        contentAlignment = Alignment.Center,
     ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
+            verticalArrangement = Arrangement.Center,
         ) {
             Text(
                 text = message,
                 color = MaterialTheme.colorScheme.error,
-                style = MaterialTheme.typography.bodyLarge
+                style = MaterialTheme.typography.bodyLarge,
             )
 
             Spacer(modifier = Modifier.height(16.dp))
 
             Button(
                 onClick = onRetry,
-                modifier = Modifier
-                    .width(120.dp)
-                    .height(48.dp),
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = MaterialTheme.colorScheme.primary,
-                    contentColor = MaterialTheme.colorScheme.onPrimary
-                ),
-                shape = RoundedCornerShape(12.dp)
+                modifier =
+                    Modifier
+                        .width(120.dp)
+                        .height(48.dp),
+                colors =
+                    ButtonDefaults.buttonColors(
+                        containerColor = MaterialTheme.colorScheme.primary,
+                        contentColor = MaterialTheme.colorScheme.onPrimary,
+                    ),
+                shape = RoundedCornerShape(12.dp),
             ) {
                 Icon(
                     imageVector = Icons.Default.Refresh,
                     contentDescription = "Retry",
-                    modifier = Modifier.size(20.dp)
+                    modifier = Modifier.size(20.dp),
                 )
                 Spacer(modifier = Modifier.width(8.dp))
                 Text(text = "Retry")

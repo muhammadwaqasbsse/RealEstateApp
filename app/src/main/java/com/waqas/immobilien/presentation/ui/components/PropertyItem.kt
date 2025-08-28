@@ -28,54 +28,59 @@ import coil.compose.AsyncImage
 import com.waqas.immobilien.domain.model.Property
 
 @Composable
-fun PropertyItem(property: Property, onClick: () -> Unit) {
+fun PropertyItem(
+    property: Property,
+    onClick: () -> Unit,
+) {
     Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(8.dp)
-            .clickable { onClick() },
+        modifier =
+            Modifier
+                .fillMaxWidth()
+                .padding(8.dp)
+                .clickable { onClick() },
         shape = RoundedCornerShape(12.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
-        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
     ) {
         Column {
-            //Property Image
+            // Property Image
             Box(modifier = Modifier.height(180.dp)) {
                 AsyncImage(
                     model = property.url,
                     contentDescription = "Property Image",
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(180.dp),
-                    contentScale = ContentScale.Crop
+                    modifier =
+                        Modifier
+                            .fillMaxWidth()
+                            .height(180.dp),
+                    contentScale = ContentScale.Crop,
                 )
             }
 
             // Price tag with background
             Box(
-                modifier = Modifier
-                    .align(Alignment.Start)
-                    .padding(15.dp)
-                    .background(MaterialTheme.colorScheme.primary, RoundedCornerShape(8.dp))
-                    .padding(horizontal = 12.dp, vertical = 5.dp)
+                modifier =
+                    Modifier
+                        .align(Alignment.Start)
+                        .padding(15.dp)
+                        .background(MaterialTheme.colorScheme.primary, RoundedCornerShape(8.dp))
+                        .padding(horizontal = 12.dp, vertical = 5.dp),
             ) {
                 Text(
                     text = "${property.price} €",
                     color = MaterialTheme.colorScheme.onPrimary,
                     fontWeight = FontWeight.Bold,
-                    fontSize = 16.sp
+                    fontSize = 16.sp,
                 )
             }
 
             // Property Details
             Column(
-                modifier = Modifier.padding(16.dp)
+                modifier = Modifier.padding(16.dp),
             ) {
-
                 Text(
                     text = property.city,
                     style = MaterialTheme.typography.bodyLarge,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
 
                 Spacer(modifier = Modifier.height(4.dp))
@@ -83,7 +88,7 @@ fun PropertyItem(property: Property, onClick: () -> Unit) {
                 Text(
                     text = "${property.propertyType} for sale",
                     style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
 
                 Spacer(modifier = Modifier.height(4.dp))
@@ -93,7 +98,7 @@ fun PropertyItem(property: Property, onClick: () -> Unit) {
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.Bold,
                     maxLines = 1,
-                    overflow = TextOverflow.Ellipsis
+                    overflow = TextOverflow.Ellipsis,
                 )
 
                 Spacer(modifier = Modifier.height(8.dp))
@@ -101,53 +106,51 @@ fun PropertyItem(property: Property, onClick: () -> Unit) {
                 // Key features
                 Row(
                     modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween
+                    horizontalArrangement = Arrangement.SpaceBetween,
                 ) {
                     FeatureItem(
                         value = formatNullableInt(property.rooms),
-                        label = "Rooms"
+                        label = "Rooms",
                     )
                     FeatureItem(
                         value = "${property.area} m²",
-                        label = "m²"
+                        label = "m²",
                     )
                     FeatureItem(
                         value = formatNullableInt(property.bedrooms),
-                        label = "Bedrooms"
+                        label = "Bedrooms",
                     )
                 }
 
                 Spacer(modifier = Modifier.height(12.dp))
-
-
-
-
             }
-
-
         }
     }
 }
 
 @Composable
-fun FeatureItem(value: String, label: String) {
+fun FeatureItem(
+    value: String,
+    label: String,
+) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier
-            .background(MaterialTheme.colorScheme.surfaceVariant, RoundedCornerShape(8.dp))
-            .padding(horizontal = 12.dp, vertical = 8.dp)
+        modifier =
+            Modifier
+                .background(MaterialTheme.colorScheme.surfaceVariant, RoundedCornerShape(8.dp))
+                .padding(horizontal = 12.dp, vertical = 8.dp),
     ) {
         Text(
             text = value,
             style = MaterialTheme.typography.bodyMedium,
             fontWeight = FontWeight.Bold,
-            color = MaterialTheme.colorScheme.primary
+            color = MaterialTheme.colorScheme.primary,
         )
 
         Text(
             text = label,
             style = MaterialTheme.typography.bodySmall,
-            color = MaterialTheme.colorScheme.onSurfaceVariant
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
     }
 }
@@ -166,9 +169,8 @@ fun ListingItemPreview() {
             professional = "GSL EXPLORE",
             propertyType = "Maison - Villa",
             offerType = 1,
-            rooms = 8
-            )
+            rooms = 8,
+        ),
     ) {
-
     }
 }

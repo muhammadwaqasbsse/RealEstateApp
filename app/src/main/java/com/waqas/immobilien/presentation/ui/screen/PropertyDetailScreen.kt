@@ -52,7 +52,7 @@ import com.waqas.immobilien.presentation.viewmodel.propertydetail.PropertyDetail
 fun PropertyDetailScreen(
     id: Int,
     onBackClick: () -> Unit,
-    viewModel: PropertyDetailViewModel = hiltViewModel()
+    viewModel: PropertyDetailViewModel = hiltViewModel(),
 ) {
     val state by viewModel.state.collectAsState()
 
@@ -61,29 +61,30 @@ fun PropertyDetailScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-               title = {
-                   Text(
-                       text = "Property Details",
-                       color = MaterialTheme.colorScheme.onBackground,
-                       fontWeight = FontWeight.Bold
-                   )
-               },
+                title = {
+                    Text(
+                        text = "Property Details",
+                        color = MaterialTheme.colorScheme.onBackground,
+                        fontWeight = FontWeight.Bold,
+                    )
+                },
                 navigationIcon = {
                     IconButton(onClick = onBackClick) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                             contentDescription = "Back",
-                            tint = MaterialTheme.colorScheme.onBackground
+                            tint = MaterialTheme.colorScheme.onBackground,
                         )
                     }
                 },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.surface,
-                    actionIconContentColor = MaterialTheme.colorScheme.onSurface,
-                    navigationIconContentColor = MaterialTheme.colorScheme.onSurface
-                )
+                colors =
+                    TopAppBarDefaults.topAppBarColors(
+                        containerColor = MaterialTheme.colorScheme.surface,
+                        actionIconContentColor = MaterialTheme.colorScheme.onSurface,
+                        navigationIconContentColor = MaterialTheme.colorScheme.onSurface,
+                    ),
             )
-        }
+        },
     ) { innerPadding ->
         Box(modifier = Modifier.padding(innerPadding)) {
             when {
@@ -97,55 +98,59 @@ fun PropertyDetailScreen(
                         Text(
                             text = "Error: ${state.error}",
                             color = MaterialTheme.colorScheme.error,
-                            style = MaterialTheme.typography.bodyLarge
+                            style = MaterialTheme.typography.bodyLarge,
                         )
                     }
                 }
                 state.property != null -> {
                     val property = state.property!!
                     Column(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .verticalScroll(rememberScrollState())
+                        modifier =
+                            Modifier
+                                .fillMaxSize()
+                                .verticalScroll(rememberScrollState()),
                     ) {
                         // Property Image
                         Box(modifier = Modifier.fillMaxWidth()) {
                             AsyncImage(
                                 model = property.url,
                                 contentDescription = "Property Image",
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .height(280.dp),
-                                contentScale = ContentScale.Crop
+                                modifier =
+                                    Modifier
+                                        .fillMaxWidth()
+                                        .height(280.dp),
+                                contentScale = ContentScale.Crop,
                             )
 
                             // Price badge with background
                             Box(
-                                modifier = Modifier
-                                    .align(Alignment.BottomStart)
-                                    .padding(16.dp)
-                                    .background(MaterialTheme.colorScheme.primary, RoundedCornerShape(6.dp))
-                                    .padding(horizontal = 12.dp, vertical = 8.dp)
+                                modifier =
+                                    Modifier
+                                        .align(Alignment.BottomStart)
+                                        .padding(16.dp)
+                                        .background(MaterialTheme.colorScheme.primary, RoundedCornerShape(6.dp))
+                                        .padding(horizontal = 12.dp, vertical = 8.dp),
                             ) {
                                 Text(
                                     text = "${property.price} €",
                                     color = MaterialTheme.colorScheme.onPrimary,
                                     fontWeight = FontWeight.Bold,
-                                    fontSize = 16.sp
+                                    fontSize = 16.sp,
                                 )
                             }
                         }
 
                         // Property Details
                         Column(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(16.dp)
+                            modifier =
+                                Modifier
+                                    .fillMaxWidth()
+                                    .padding(16.dp),
                         ) {
                             Text(
                                 text = property.city,
                                 style = MaterialTheme.typography.bodyLarge,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant
+                                color = MaterialTheme.colorScheme.onSurfaceVariant,
                             )
 
                             Spacer(modifier = Modifier.height(4.dp))
@@ -153,7 +158,7 @@ fun PropertyDetailScreen(
                             Text(
                                 text = "${property.propertyType} for sale",
                                 style = MaterialTheme.typography.bodySmall,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant
+                                color = MaterialTheme.colorScheme.onSurfaceVariant,
                             )
 
                             Spacer(modifier = Modifier.height(4.dp))
@@ -162,7 +167,7 @@ fun PropertyDetailScreen(
                                 text = "All you need to know at a glance",
                                 style = MaterialTheme.typography.titleLarge,
                                 fontWeight = FontWeight.Bold,
-                                color = MaterialTheme.colorScheme.onBackground
+                                color = MaterialTheme.colorScheme.onBackground,
                             )
 
                             Spacer(modifier = Modifier.height(16.dp))
@@ -172,7 +177,7 @@ fun PropertyDetailScreen(
                                 text = "Financing from €1,040 /month",
                                 style = MaterialTheme.typography.bodyMedium,
                                 color = MaterialTheme.colorScheme.primary,
-                                fontWeight = FontWeight.Medium
+                                fontWeight = FontWeight.Medium,
                             )
 
                             Spacer(modifier = Modifier.height(24.dp))
@@ -180,16 +185,16 @@ fun PropertyDetailScreen(
                             // Key Features Grid
                             Row(
                                 modifier = Modifier.fillMaxWidth(),
-                                horizontalArrangement = Arrangement.SpaceBetween
+                                horizontalArrangement = Arrangement.SpaceBetween,
                             ) {
                                 FeatureBox(
                                     value = formatNullableInt(property.rooms),
-                                    label = "Rooms"
+                                    label = "Rooms",
                                 )
 
                                 FeatureBox(
                                     value = "${property.area}",
-                                    label = "Living space"
+                                    label = "Living space",
                                 )
                             }
 
@@ -197,16 +202,16 @@ fun PropertyDetailScreen(
 
                             Row(
                                 modifier = Modifier.fillMaxWidth(),
-                                horizontalArrangement = Arrangement.SpaceBetween
+                                horizontalArrangement = Arrangement.SpaceBetween,
                             ) {
                                 FeatureBox(
                                     value = "1",
-                                    label = "Floors"
+                                    label = "Floors",
                                 )
 
                                 FeatureBox(
                                     value = "Immediately",
-                                    label = "Availability"
+                                    label = "Availability",
                                 )
                             }
 
@@ -218,13 +223,13 @@ fun PropertyDetailScreen(
                                     imageVector = Icons.Default.LocationOn,
                                     contentDescription = "Location",
                                     tint = MaterialTheme.colorScheme.primary,
-                                    modifier = Modifier.size(20.dp)
+                                    modifier = Modifier.size(20.dp),
                                 )
                                 Spacer(modifier = Modifier.width(8.dp))
                                 Text(
                                     text = "${property.city}, lorem ipsum (22527)",
                                     style = MaterialTheme.typography.bodyMedium,
-                                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                                    color = MaterialTheme.colorScheme.onSurfaceVariant,
                                 )
                             }
 
@@ -235,25 +240,26 @@ fun PropertyDetailScreen(
                                 text = "Contact the provider",
                                 style = MaterialTheme.typography.titleMedium,
                                 fontWeight = FontWeight.Bold,
-                                color = MaterialTheme.colorScheme.onBackground
+                                color = MaterialTheme.colorScheme.onBackground,
                             )
 
                             Spacer(modifier = Modifier.height(16.dp))
 
-                            //Call button
+                            // Call button
                             Button(
                                 onClick = { /* Handle call */ },
                                 modifier = Modifier.fillMaxWidth(),
-                                colors = ButtonDefaults.buttonColors(
-                                    containerColor = MaterialTheme.colorScheme.primary,
-                                    contentColor = MaterialTheme.colorScheme.onPrimary
-                                ),
-                                shape = RoundedCornerShape(12.dp)
+                                colors =
+                                    ButtonDefaults.buttonColors(
+                                        containerColor = MaterialTheme.colorScheme.primary,
+                                        contentColor = MaterialTheme.colorScheme.onPrimary,
+                                    ),
+                                shape = RoundedCornerShape(12.dp),
                             ) {
                                 Icon(
                                     imageVector = Icons.Default.Call,
                                     contentDescription = "Call",
-                                    modifier = Modifier.size(20.dp)
+                                    modifier = Modifier.size(20.dp),
                                 )
                                 Spacer(modifier = Modifier.width(8.dp))
                                 Text(text = "Call")
@@ -267,32 +273,37 @@ fun PropertyDetailScreen(
 }
 
 @Composable
-fun FeatureBox(value: String, label: String) {
+fun FeatureBox(
+    value: String,
+    label: String,
+) {
     Card(
-        modifier = Modifier
-            .width(160.dp)
-            .height(80.dp),
+        modifier =
+            Modifier
+                .width(160.dp)
+                .height(80.dp),
         shape = RoundedCornerShape(12.dp),
-        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant)
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant),
     ) {
         Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(16.dp),
+            modifier =
+                Modifier
+                    .fillMaxSize()
+                    .padding(16.dp),
             verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Text(
                 text = value,
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.Bold,
-                color = MaterialTheme.colorScheme.primary
+                color = MaterialTheme.colorScheme.primary,
             )
 
             Text(
                 text = label,
                 style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
         }
     }

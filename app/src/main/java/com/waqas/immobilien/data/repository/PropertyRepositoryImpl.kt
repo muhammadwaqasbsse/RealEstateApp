@@ -6,8 +6,8 @@ import com.waqas.immobilien.domain.model.Property
 import com.waqas.immobilien.domain.repository.PropertyRepository
 
 class PropertyRepositoryImpl(
-    private val propertyApi: PropertyApi
-): PropertyRepository {
+    private val propertyApi: PropertyApi,
+) : PropertyRepository {
     override suspend fun fetchProperties(): List<Property> {
         val properties = propertyApi.fetchProperties()
         val propertiesList = properties.items

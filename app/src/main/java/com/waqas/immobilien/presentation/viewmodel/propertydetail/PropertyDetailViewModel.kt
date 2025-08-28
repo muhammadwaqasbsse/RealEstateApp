@@ -10,18 +10,21 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class PropertyDetailViewModel @Inject constructor(
-    private val getListingDetail: GetPropertyDetailUseCase
-): ViewModel() {
-    private val _state = MutableStateFlow(PropertyDetailState())
-    val state: StateFlow<PropertyDetailState> = _state
+class PropertyDetailViewModel
+    @Inject
+    constructor(
+        private val getListingDetail: GetPropertyDetailUseCase,
+    ) : ViewModel() {
+        private val _state = MutableStateFlow(PropertyDetailState())
+        val state: StateFlow<PropertyDetailState> = _state
 
-    fun load(id: Int) {
-        viewModelScope.launch {
-            _state.value = PropertyDetailState(isLoading = true)
-            runCatching { getListingDetail(id) }
-                .onSuccess { _state.value = PropertyDetailState(property = it) }
-                .onFailure { _state.value = PropertyDetailState(error = it.message) }
+        fun load(id: Int) {
+            viewModelScope.launch {
+                _state.value = PropertyDetailState(isLoading = true)
+                runCatching { getListingDetail(id) }
+                    .onSuccess { _state.value = PropertyDetailState(property = it) }
+                    .onFailure { _state.value = PropertyDetailState(error = it.message) }
+            }
         }
     }
-}
+

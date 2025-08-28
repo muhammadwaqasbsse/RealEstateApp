@@ -24,12 +24,20 @@ class PropertyViewModel
         private val _effect = MutableSharedFlow<Effect>()
         val effect = _effect.asSharedFlow()
 
+        /**
+         * Processes events sent from the UI layer.
+         * This is the entry point for all user interactions with the ViewModel.
+         */
         fun onEvent(event: PropertyListEvent) {
             when (event) {
                 is PropertyListEvent.LoadingPropertyList -> load()
             }
         }
 
+        /**
+         * Loads property data from the repository and updates the state accordingly.
+         * Handles both success and failure cases with appropriate state updates and effects.
+         */
         private fun load() {
             viewModelScope.launch {
                 _state.value = _state.value.copy(isLoading = false)

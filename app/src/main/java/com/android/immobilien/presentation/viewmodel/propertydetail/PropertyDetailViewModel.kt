@@ -18,6 +18,11 @@ class PropertyDetailViewModel
         private val _state = MutableStateFlow(PropertyDetailState())
         val state: StateFlow<PropertyDetailState> = _state
 
+        /**
+         * Initiates loading of detailed property information.
+         *
+         * @param id The unique identifier of the property to load details for
+         */
         fun load(id: Int) {
             viewModelScope.launch {
                 _state.value = PropertyDetailState(isLoading = true)

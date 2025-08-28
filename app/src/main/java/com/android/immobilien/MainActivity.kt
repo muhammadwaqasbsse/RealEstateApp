@@ -22,9 +22,11 @@ import dagger.hilt.android.AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        // Enable edge-to-edge display for modern Android UI
         enableEdgeToEdge()
         setContent {
             ImmobilienAppTheme {
+                // Base container for the app's UI
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background,
@@ -36,7 +38,10 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-@Suppress("ktlint:standard:function-naming")
+/**
+ * Main composable that defines the navigation structure of the app.
+ * Uses Jetpack Navigation Compose to handle screen transitions.
+ */
 @Composable
 fun ImmobilienAppUI() {
     val navController = rememberNavController()

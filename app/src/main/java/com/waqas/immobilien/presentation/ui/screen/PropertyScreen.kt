@@ -42,6 +42,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.waqas.immobilien.presentation.ui.components.PropertyItem
@@ -49,9 +50,10 @@ import com.waqas.immobilien.presentation.viewmodel.common.Effect
 import com.waqas.immobilien.presentation.viewmodel.property.PropertyListEvent
 import com.waqas.immobilien.presentation.viewmodel.property.PropertyListViewModel
 
+@Suppress("ktlint:standard:function-naming")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ListingScreen(
+fun PropertyScreen(
     viewModel: PropertyListViewModel = hiltViewModel(),
     onItemClick: (Int) -> Unit,
 ) {
@@ -117,7 +119,10 @@ fun ListingScreen(
                         modifier = Modifier.fillMaxSize(),
                         contentAlignment = Alignment.Center,
                     ) {
-                        CircularProgressIndicator(color = MaterialTheme.colorScheme.primary)
+                        CircularProgressIndicator(
+                            modifier = Modifier.testTag("loading_indicator"),
+                            color = MaterialTheme.colorScheme.primary,
+                        )
                     }
                 }
                 state.properties.isEmpty() -> {
@@ -187,6 +192,7 @@ fun StateMessageView(
             verticalArrangement = Arrangement.Center,
         ) {
             Text(
+                modifier = Modifier.testTag("message_text"),
                 text = message,
                 color = MaterialTheme.colorScheme.error,
                 style = MaterialTheme.typography.bodyLarge,
@@ -198,6 +204,7 @@ fun StateMessageView(
                 onClick = onRetry,
                 modifier =
                     Modifier
+                        .testTag("retry_button")
                         .width(120.dp)
                         .height(48.dp),
                 colors =

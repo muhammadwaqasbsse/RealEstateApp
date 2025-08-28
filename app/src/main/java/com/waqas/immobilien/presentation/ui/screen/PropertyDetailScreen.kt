@@ -47,6 +47,7 @@ import coil.compose.AsyncImage
 import com.waqas.immobilien.presentation.ui.components.formatNullableInt
 import com.waqas.immobilien.presentation.viewmodel.propertydetail.PropertyDetailViewModel
 
+@Suppress("ktlint:standard:function-naming")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PropertyDetailScreen(

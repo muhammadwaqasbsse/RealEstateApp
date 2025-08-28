@@ -13,8 +13,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.waqas.immobilien.presentation.ui.screen.ListingScreen
 import com.waqas.immobilien.presentation.ui.screen.PropertyDetailScreen
+import com.waqas.immobilien.presentation.ui.screen.PropertyScreen
 import com.waqas.immobilien.presentation.ui.theme.ImmobilienAppTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -36,13 +36,14 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+@Suppress("ktlint:standard:function-naming")
 @Composable
 fun ImmobilienAppUI() {
     val navController = rememberNavController()
 
     NavHost(navController, startDestination = "list") {
         composable(route = "list") {
-            ListingScreen(
+            PropertyScreen(
                 onItemClick = { id ->
                     navController.navigate("detail/$id")
                 },

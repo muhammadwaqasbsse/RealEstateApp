@@ -1,6 +1,6 @@
 package com.android.immobilien.di
 
-import com.android.immobilien.data.remote.NetworkConfig.BASE_URL
+import com.android.immobilien.BuildConfig
 import com.android.immobilien.data.remote.PropertyApi
 import com.squareup.moshi.Moshi
 import dagger.Module
@@ -43,7 +43,7 @@ object NetworkModule {
     ): Retrofit =
         Retrofit
             .Builder()
-            .baseUrl(BASE_URL)
+            .baseUrl(BuildConfig.BASE_URL)
             .client(client)
             .addConverterFactory(MoshiConverterFactory.create(moshi))
             .build()

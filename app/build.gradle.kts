@@ -26,6 +26,8 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField("String", "BASE_URL", "\"https://gsl-apps-technical-test.dignp.com/\"")
     }
 
     ktlint {
@@ -39,12 +41,17 @@ android {
     }
 
     buildTypes {
+        debug {
+            isMinifyEnabled = false
+            buildConfigField("String", "BASE_URL", "\"https://gsl-apps-technical-test.dignp.com/\"")
+        }
         release {
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro",
             )
+            buildConfigField("String", "BASE_URL", "\"https://gsl-apps-technical-test.dignp.com/\"")
         }
     }
     compileOptions {
@@ -55,6 +62,7 @@ android {
         jvmTarget = "11"
     }
     buildFeatures {
+        buildConfig = true
         compose = true
     }
 }

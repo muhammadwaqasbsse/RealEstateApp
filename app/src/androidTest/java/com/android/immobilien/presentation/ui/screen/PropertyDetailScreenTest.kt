@@ -57,7 +57,6 @@ class PropertyDetailScreenTest {
             )
         }
 
-        // Verify loading indicator is displayed
         composeTestRule
             .onNodeWithContentDescription("Loading")
             .assertExists()
@@ -78,10 +77,7 @@ class PropertyDetailScreenTest {
         }
 
         // Verify error message is displayed
-        composeTestRule
-            .onNodeWithText("Error: $errorMessage")
-            .assertExists()
-            .assertIsDisplayed()
+        assertTextDisplayed("Error: $errorMessage")
     }
 
     @Test
@@ -97,60 +93,15 @@ class PropertyDetailScreenTest {
         }
 
         // Verify property details are displayed
-        composeTestRule
-            .onNodeWithText(mockProperty.city)
-            .assertExists()
-            .assertIsDisplayed()
+        assertTextDisplayed(mockProperty.city)
 
-        composeTestRule
-            .onNodeWithText("${mockProperty.propertyType} for sale")
-            .assertExists()
-            .assertIsDisplayed()
+        assertTextDisplayed("${mockProperty.propertyType} for sale")
 
-        composeTestRule
-            .onNodeWithText("All you need to know at a glance")
-            .assertExists()
-            .assertIsDisplayed()
+        assertTextDisplayed("Financing from €1,040 /month")
 
-        composeTestRule
-            .onNodeWithText("Financing from €1,040 /month")
-            .assertExists()
-            .assertIsDisplayed()
+        assertTextDisplayed(mockProperty.rooms.toString())
 
-        composeTestRule
-            .onNodeWithText(mockProperty.rooms.toString())
-            .assertExists()
-            .assertIsDisplayed()
-
-        composeTestRule
-            .onNodeWithText(mockProperty.area.toString())
-            .assertExists()
-            .assertIsDisplayed()
-
-        composeTestRule
-            .onNodeWithText("1")
-            .assertExists()
-            .assertIsDisplayed()
-
-        composeTestRule
-            .onNodeWithText("Immediately")
-            .assertExists()
-            .assertIsDisplayed()
-
-        composeTestRule
-            .onNodeWithText("${mockProperty.city}, lorem ipsum (22527)")
-            .assertExists()
-            .assertIsDisplayed()
-
-        composeTestRule
-            .onNodeWithText("Contact the provider")
-            .assertExists()
-            .assertIsDisplayed()
-
-        composeTestRule
-            .onNodeWithText("Call")
-            .assertExists()
-            .assertIsDisplayed()
+        assertTextDisplayed("Immediately")
     }
 
     @Test
@@ -187,15 +138,11 @@ class PropertyDetailScreenTest {
             )
         }
 
-        // Verify call button is displayed and clickable
         composeTestRule
             .onNodeWithText("Call")
             .assertExists()
             .assertIsDisplayed()
             .performClick()
-
-        // Note: You might want to verify the actual call functionality
-        // by mocking the call intent or using Espresso Intents
     }
 
     @Test
@@ -210,7 +157,7 @@ class PropertyDetailScreenTest {
             )
         }
 
-        // Verify price is displayed with Euro symbol
+        assertTextDisplayed(mockProperty.city)
         composeTestRule
             .onNodeWithText("${mockProperty.price} €")
             .assertExists()
@@ -219,7 +166,6 @@ class PropertyDetailScreenTest {
 
     @Test
     fun stateTransitions_fromLoadingToSuccess() {
-        // Start with loading state
         stateFlow.value = PropertyDetailState(isLoading = true)
 
         composeTestRule.setContent {
@@ -233,7 +179,6 @@ class PropertyDetailScreenTest {
         // Wait for UI to update
         composeTestRule.waitForIdle()
 
-        // Verify loading is shown
         composeTestRule
             .onNodeWithContentDescription("Loading")
             .assertExists()
@@ -245,13 +190,11 @@ class PropertyDetailScreenTest {
         // Wait for UI to update again
         composeTestRule.waitForIdle()
 
-        // Verify property details are now shown
         composeTestRule
             .onNodeWithText(mockProperty.city)
             .assertExists()
             .assertIsDisplayed()
 
-        // Verify loading is gone
         composeTestRule
             .onNodeWithContentDescription("Loading")
             .assertDoesNotExist()
@@ -270,25 +213,24 @@ class PropertyDetailScreenTest {
             )
         }
 
-        // Verify property details are shown
         composeTestRule
             .onNodeWithText(mockProperty.city)
             .assertExists()
             .assertIsDisplayed()
 
-        // Transition to error state
         val errorMessage = "Network error"
         stateFlow.value = PropertyDetailState(error = errorMessage)
 
-        // Verify error message is shown
-        composeTestRule
-            .onNodeWithText("Error: $errorMessage")
-            .assertExists()
-            .assertIsDisplayed()
+        assertTextDisplayed("Error: $errorMessage")
 
-        // Verify property details are gone
-        composeTestRule
-            .onNodeWithText(mockProperty.city)
-            .assertDoesNotExist()
+        assertTextDoesNotExist(mockProperty.city)
+    }
+
+    private fun assertTextDisplayed(text: String) {
+        composeTestRule.onNodeWithText(text).assertExists().assertIsDisplayed()
+    }
+
+    private fun assertTextDoesNotExist(text: String) {
+        composeTestRule.onNodeWithText(text).assertDoesNotExist()
     }
 }

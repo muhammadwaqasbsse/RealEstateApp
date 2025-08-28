@@ -1,0 +1,54 @@
+package com.android.immobilien.presentation.viewmodel.property
+
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.android.immobilien.domain.usecase.GetPropertiesUseCase
+import com.android.immobilien.presentation.viewmodel.common.Effect
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.launch
+import javax.inject.Inject
+
+@HiltViewModel
+class PropertyViewModel
+    @Inject
+    constructor(
+        private val getListings: GetPropertiesUseCase,
+    ) : ViewModel() {
+        private val _state = MutableStateFlow(PropertyListState())
+        val state: StateFlow<PropertyListState> = _state
+
+        private val _effect = MutableSharedFlow<Effect>()
+        val effect = _effect.asSharedFlow()
+
+        /**
+         * Processes events sent from the UI layer.
+         * This is the entry point for all user interactions with the ViewModel.
+         */
+        fun onEvent(event: PropertyListEvent) {
+            when (event) {
+                is PropertyListEvent.LoadingPropertyList -> load()
+            }
+        }
+
+        /**
+         * Loads property data from the repository and updates the state accordingly.
+         * Handles both success and failure cases with appropriate state updates and effects.
+         */
+        private fun load() {
+            viewModelScope.launch {
+                _state.value = _state.value.copy(isLoading = false)
+                runCatching { getListings() }
+                    .onSuccess { listing ->
+                        _state.value = PropertyListState(properties = listing)
+                        _effect.emit(Effect.ShowToast("Listings loaded!"))
+                    }.onFailure { e ->
+                        _state.value = PropertyListState(error = e.message)
+                        _effect.emit(Effect.ShowToast("Error loading listings"))
+                    }
+            }
+        }
+    }

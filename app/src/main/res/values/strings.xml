@@ -1,3 +1,33 @@
 <resources>
     <string name="app_name">Immobilien</string>
+    <string name="property_details_title">Property Details</string>
+    <string name="back">Back</string>
+    <string name="property_image_description">Property Image</string>
+    <string name="price_format">%d €</string>
+    <string name="property_type_format">%s for sale</string>
+    <string name="property_overview_title">All you need to know at a glance</string>
+    <string name="financing_info">Financing from €1,040 /month</string>
+    <string name="rooms_label">Rooms</string>
+    <string name="living_space_label">Living space</string>
+    <string name="floors_label">Floors</string>
+    <string name="immediate_availability">Immediately</string>
+    <string name="availability_label">Availability</string>
+    <string name="location_icon_description">Location</string>
+    <string name="location_format">%1$s, lorem ipsum (22527)</string>
+    <string name="contact_provider_title">Contact the provider</string>
+    <string name="call_button_description">Call</string>
+    <string name="call_button_text">Call</string>
+    <string name="error_message">Error: %1$s</string>
+    <string name="not_avaliable">N/A</string>
+
+    <string name="property_image_desc">Property Image</string>
+    <string name="not_available">N/A</string>
+    <string name="rooms">Rooms</string>
+    <string name="area_format">%d m²</string>
+    <string name="square_meters">m²</string>
+    <string name="bedrooms">Bedrooms</string>
+    <string name="search_properties">Search properties...</string>
+    <string name="no_property_found">No properties found</string>
+    <string name="error">Error: </string>
+    <string name="retry">Retry</string>
 </resources>

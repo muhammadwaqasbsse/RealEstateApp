@@ -26,4 +26,8 @@
     <string name="area_format">%d m²</string>
     <string name="square_meters">m²</string>
     <string name="bedrooms">Bedrooms</string>
+    <string name="search_properties">Search properties...</string>
+    <string name="no_property_found">No properties found</string>
+    <string name="error">Error: </string>
+    <string name="retry">Retry</string>
 </resources>

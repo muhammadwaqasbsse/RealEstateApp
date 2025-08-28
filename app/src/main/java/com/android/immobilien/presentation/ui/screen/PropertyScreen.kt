@@ -1,5 +1,6 @@
 package com.android.immobilien.presentation.ui.screen
 
+import android.content.Context
 import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -45,6 +46,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.android.immobilien.R
 import com.android.immobilien.presentation.ui.components.PropertyItem
 import com.android.immobilien.presentation.viewmodel.common.Effect
 import com.android.immobilien.presentation.viewmodel.property.PropertyListEvent
@@ -70,7 +72,7 @@ fun PropertyScreen(
             TopAppBar(
                 title = {
                     Text(
-                        text = "Immobilien",
+                        text = context.getString(R.string.app_name),
                         style = MaterialTheme.typography.titleLarge,
                         color = MaterialTheme.colorScheme.onBackground,
                     )
@@ -96,7 +98,7 @@ fun PropertyScreen(
                         .padding(12.dp),
                 placeholder = {
                     Text(
-                        text = "Search properties...",
+                        text = context.getString(R.string.search_properties),
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
                 },
@@ -127,13 +129,15 @@ fun PropertyScreen(
                 }
                 state.properties.isEmpty() -> {
                     StateMessageView(
-                        "No properties found",
+                        context = context,
+                        message = context.getString(R.string.no_property_found),
                         onRetry = { viewModel.onEvent(PropertyListEvent.LoadingPropertyList) },
                     )
                 }
                 state.error != null -> {
                     StateMessageView(
-                        "Error: ${state.error}",
+                        context = context,
+                        message = "${context.getString(R.string.error)} ${state.error}",
                         onRetry = { viewModel.onEvent(PropertyListEvent.LoadingPropertyList) },
                     )
                 }
@@ -180,6 +184,7 @@ fun PropertyScreen(
 
 @Composable
 fun StateMessageView(
+    context: Context,
     message: String,
     onRetry: () -> Unit,
 ) {
@@ -216,11 +221,11 @@ fun StateMessageView(
             ) {
                 Icon(
                     imageVector = Icons.Default.Refresh,
-                    contentDescription = "Retry",
+                    contentDescription = context.getString(R.string.retry),
                     modifier = Modifier.size(20.dp),
                 )
                 Spacer(modifier = Modifier.width(8.dp))
-                Text(text = "Retry")
+                Text(text = context.getString(R.string.retry))
             }
         }
     }

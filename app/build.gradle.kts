@@ -8,7 +8,7 @@ plugins {
 }
 
 android {
-    namespace = "com.waqas.immobilien"
+    namespace = "com.android.immobilien"
     compileSdk = 36
 
     packagingOptions {
@@ -19,7 +19,7 @@ android {
     }
 
     defaultConfig {
-        applicationId = "com.waqas.immobilien"
+        applicationId = "com.android.immobilien"
         minSdk = 24
         targetSdk = 35
         versionCode = 1

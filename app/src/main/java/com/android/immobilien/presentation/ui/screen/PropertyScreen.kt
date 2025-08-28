@@ -94,6 +94,7 @@ fun PropertyScreen(
                 onValueChange = { searchQuery = it },
                 modifier =
                     Modifier
+                        .testTag("search_field")
                         .fillMaxWidth()
                         .padding(12.dp),
                 placeholder = {
@@ -148,7 +149,7 @@ fun PropertyScreen(
                         } else {
                             state.properties.filter { listings ->
                                 listings.city.contains(searchQuery, ignoreCase = true) ||
-                                    listings.propertyType.contains(searchQuery, ignoreCase = true)
+                                    listings.professional.contains(searchQuery, ignoreCase = true)
                             }
                         }
 

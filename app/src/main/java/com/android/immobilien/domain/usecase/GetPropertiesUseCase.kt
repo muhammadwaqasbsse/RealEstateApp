@@ -3,7 +3,7 @@ package com.android.immobilien.domain.usecase
 import com.android.immobilien.domain.repository.PropertyRepository
 
 class GetPropertiesUseCase(
-    private val repo: PropertyRepository,
+    private val propertyRepository: PropertyRepository,
 ) {
-    suspend operator fun invoke() = repo.getProperties()
+    suspend operator fun invoke() = propertyRepository.getProperties()
 }

@@ -39,6 +39,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -47,11 +49,10 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import com.android.immobilien.R
 import com.android.immobilien.domain.model.Property
-import com.android.immobilien.presentation.ui.components.formatNullableInt
 import com.android.immobilien.presentation.viewmodel.propertydetail.PropertyDetailState
 import com.android.immobilien.presentation.viewmodel.propertydetail.PropertyDetailViewModel
+import com.android.immobilien.utils.formatNullable
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PropertyDetailScreen(
     id: Int,
@@ -124,7 +125,10 @@ fun PropertyContent(
 @Composable
 fun LoadingView() {
     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-        CircularProgressIndicator(color = MaterialTheme.colorScheme.primary)
+        CircularProgressIndicator(
+            modifier = Modifier.testTag("loading_indicator"),
+            color = MaterialTheme.colorScheme.primary,
+        )
     }
 }
 
@@ -132,6 +136,7 @@ fun LoadingView() {
 fun ErrorView(error: String) {
     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
         Text(
+            modifier = Modifier.testTag("error_message"),
             text = stringResource(R.string.error_message, error),
             color = MaterialTheme.colorScheme.error,
             style = MaterialTheme.typography.bodyLarge,
@@ -183,6 +188,7 @@ fun PropertyHeader(
                     .padding(horizontal = 12.dp, vertical = 8.dp),
         ) {
             Text(
+                modifier = Modifier.testTag("property_price"),
                 text = stringResource(R.string.price_format, property.price),
                 color = MaterialTheme.colorScheme.onPrimary,
                 fontWeight = FontWeight.Bold,
@@ -197,6 +203,8 @@ fun PropertyInfo(
     property: Property,
     modifier: Modifier = Modifier,
 ) {
+    val context = LocalContext.current
+
     Column(
         modifier =
             modifier
@@ -244,7 +252,7 @@ fun PropertyInfo(
             horizontalArrangement = Arrangement.SpaceBetween,
         ) {
             FeatureBox(
-                value = formatNullableInt(property.rooms),
+                value = property.rooms.formatNullable(context = context, defaultResId = R.string.not_avaliable),
                 label = stringResource(R.string.rooms_label),
             )
 
@@ -326,7 +334,10 @@ fun ContactSection(modifier: Modifier = Modifier) {
         // Call button
         Button(
             onClick = { /* Handle call */ },
-            modifier = Modifier.fillMaxWidth(),
+            modifier =
+                Modifier
+                    .testTag("call_button")
+                    .fillMaxWidth(),
             colors =
                 ButtonDefaults.buttonColors(
                     containerColor = MaterialTheme.colorScheme.primary,

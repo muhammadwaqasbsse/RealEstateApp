@@ -47,6 +47,7 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.android.immobilien.R
+import com.android.immobilien.domain.model.Property
 import com.android.immobilien.presentation.ui.components.PropertyItem
 import com.android.immobilien.presentation.viewmodel.common.Effect
 import com.android.immobilien.presentation.viewmodel.property.PropertyListEvent
@@ -88,80 +89,39 @@ fun PropertyScreen(
                     .fillMaxSize()
                     .background(MaterialTheme.colorScheme.background),
         ) {
-            // Search Bar
-            TextField(
-                value = searchQuery,
-                onValueChange = { searchQuery = it },
-                modifier =
-                    Modifier
-                        .testTag("search_field")
-                        .fillMaxWidth()
-                        .padding(12.dp),
-                placeholder = {
-                    Text(
-                        text = context.getString(R.string.search_properties),
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    )
-                },
-                colors =
-                    TextFieldDefaults.colors(
-                        focusedContainerColor = MaterialTheme.colorScheme.surface,
-                        unfocusedContainerColor = MaterialTheme.colorScheme.surface,
-                        disabledContainerColor = MaterialTheme.colorScheme.surface,
-                        focusedIndicatorColor = Color.Transparent,
-                        unfocusedLeadingIconColor = Color.Transparent,
-                    ),
-                shape = MaterialTheme.shapes.medium,
-                textStyle = MaterialTheme.typography.bodyMedium,
-                singleLine = true,
+            SearchBar(
+                searchQuery = searchQuery,
+                onQueryChange = { searchQuery = it },
             )
 
             when {
-                state.isLoading -> {
-                    Box(
-                        modifier = Modifier.fillMaxSize(),
-                        contentAlignment = Alignment.Center,
-                    ) {
-                        CircularProgressIndicator(
-                            modifier = Modifier.testTag("loading_indicator"),
-                            color = MaterialTheme.colorScheme.primary,
-                        )
-                    }
-                }
-                state.properties.isEmpty() -> {
+                state.isLoading -> LoadingState()
+                state.properties.isEmpty() ->
                     StateMessageView(
                         context = context,
                         message = context.getString(R.string.no_property_found),
                         onRetry = { viewModel.onEvent(PropertyListEvent.LoadingPropertyList) },
                     )
-                }
-                state.error != null -> {
+                state.error != null ->
                     StateMessageView(
                         context = context,
                         message = "${context.getString(R.string.error)} ${state.error}",
                         onRetry = { viewModel.onEvent(PropertyListEvent.LoadingPropertyList) },
                     )
-                }
                 else -> {
-                    val filterListings =
+                    val filteredProperties =
                         if (searchQuery.isBlank()) {
                             state.properties
                         } else {
-                            state.properties.filter { listings ->
-                                listings.city.contains(searchQuery, ignoreCase = true) ||
-                                    listings.professional.contains(searchQuery, ignoreCase = true)
+                            state.properties.filter { property ->
+                                property.city.contains(searchQuery, ignoreCase = true) ||
+                                    property.professional.contains(searchQuery, ignoreCase = true)
                             }
                         }
-
-                    LazyColumn(
-                        state = rememberLazyListState(),
-                        contentPadding = PaddingValues(horizontal = 8.dp, vertical = 8.dp),
-                        verticalArrangement = Arrangement.spacedBy(16.dp),
-                    ) {
-                        items(filterListings) { listing ->
-                            PropertyItem(listing) { onItemClick(listing.id) }
-                        }
-                    }
+                    PropertyList(
+                        properties = filteredProperties,
+                        onItemClick = onItemClick,
+                    )
                 }
             }
 
@@ -180,6 +140,69 @@ fun PropertyScreen(
                 }
             }
         }
+    }
+}
+
+@Composable
+fun SearchBar(
+    searchQuery: String,
+    onQueryChange: (String) -> Unit,
+) {
+    val context = LocalContext.current
+    TextField(
+        value = searchQuery,
+        onValueChange = onQueryChange,
+        modifier =
+            Modifier
+                .testTag("search_field")
+                .fillMaxWidth()
+                .padding(12.dp),
+        placeholder = {
+            Text(
+                text = context.getString(R.string.search_properties),
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+        },
+        colors =
+            TextFieldDefaults.colors(
+                focusedContainerColor = MaterialTheme.colorScheme.surface,
+                unfocusedContainerColor = MaterialTheme.colorScheme.surface,
+                disabledContainerColor = MaterialTheme.colorScheme.surface,
+                focusedIndicatorColor = Color.Transparent,
+                unfocusedLeadingIconColor = Color.Transparent,
+            ),
+        shape = MaterialTheme.shapes.medium,
+        textStyle = MaterialTheme.typography.bodyMedium,
+        singleLine = true,
+    )
+}
+
+@Composable
+fun PropertyList(
+    properties: List<Property>,
+    onItemClick: (Int) -> Unit,
+) {
+    LazyColumn(
+        state = rememberLazyListState(),
+        contentPadding = PaddingValues(horizontal = 8.dp, vertical = 8.dp),
+        verticalArrangement = Arrangement.spacedBy(16.dp),
+    ) {
+        items(properties) { property ->
+            PropertyItem(property) { onItemClick(property.id) }
+        }
+    }
+}
+
+@Composable
+fun LoadingState() {
+    Box(
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center,
+    ) {
+        CircularProgressIndicator(
+            modifier = Modifier.testTag("loading_indicator"),
+            color = MaterialTheme.colorScheme.primary,
+        )
     }
 }
 

@@ -230,6 +230,9 @@ class PropertyDetailScreenTest {
             )
         }
 
+        // Wait for UI to update
+        composeTestRule.waitForIdle()
+
         // Verify loading is shown
         composeTestRule
             .onNodeWithContentDescription("Loading")
@@ -238,6 +241,9 @@ class PropertyDetailScreenTest {
 
         // Transition to success state
         stateFlow.value = PropertyDetailState(property = mockProperty)
+
+        // Wait for UI to update again
+        composeTestRule.waitForIdle()
 
         // Verify property details are now shown
         composeTestRule

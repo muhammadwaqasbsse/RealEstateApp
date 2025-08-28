@@ -42,6 +42,8 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -126,7 +128,12 @@ fun PropertyContent(
 fun LoadingView() {
     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
         CircularProgressIndicator(
-            modifier = Modifier.testTag("loading_indicator"),
+            modifier =
+                Modifier
+                    .align(Alignment.Center)
+                    .semantics {
+                        contentDescription = "Loading" // Add this line
+                    },
             color = MaterialTheme.colorScheme.primary,
         )
     }

@@ -19,8 +19,8 @@ import org.junit.Before
 import org.junit.Test
 
 @OptIn(ExperimentalCoroutinesApi::class)
-class PropertyListViewModelTest {
-    private lateinit var viewModel: PropertyListViewModel
+class PropertyViewModelTest {
+    private lateinit var viewModel: PropertyViewModel
     private lateinit var getPropertiesUseCase: GetPropertiesUseCase
     private val testDispatcher = StandardTestDispatcher()
 
@@ -28,7 +28,7 @@ class PropertyListViewModelTest {
     fun setUp() {
         Dispatchers.setMain(testDispatcher)
         getPropertiesUseCase = mockk()
-        viewModel = PropertyListViewModel(getPropertiesUseCase)
+        viewModel = PropertyViewModel(getPropertiesUseCase)
     }
 
     @Test

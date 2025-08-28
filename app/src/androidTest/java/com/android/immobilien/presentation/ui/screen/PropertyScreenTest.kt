@@ -7,7 +7,7 @@ import com.android.immobilien.presentation.ui.screen.PropertyScreen
 import com.android.immobilien.presentation.viewmodel.common.Effect
 import com.android.immobilien.presentation.viewmodel.property.PropertyListEvent
 import com.android.immobilien.presentation.viewmodel.property.PropertyListState
-import com.android.immobilien.presentation.viewmodel.property.PropertyListViewModel
+import com.android.immobilien.presentation.viewmodel.property.PropertyViewModel
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
@@ -24,7 +24,7 @@ class PropertyScreenTest {
     @get:Rule
     val composeTestRule = createComposeRule()
 
-    private lateinit var mockViewModel: PropertyListViewModel
+    private lateinit var mockViewModel: PropertyViewModel
     private val mockOnItemClick: (Int) -> Unit = mockk(relaxed = true)
     private lateinit var stateFlow: MutableStateFlow<PropertyListState>
     private lateinit var effectFlow: SharedFlow<Effect>

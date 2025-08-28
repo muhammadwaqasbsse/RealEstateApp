@@ -13,7 +13,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class PropertyListViewModel
+class PropertyViewModel
     @Inject
     constructor(
         private val getListings: GetPropertiesUseCase,

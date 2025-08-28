@@ -50,13 +50,13 @@ import com.android.immobilien.R
 import com.android.immobilien.presentation.ui.components.PropertyItem
 import com.android.immobilien.presentation.viewmodel.common.Effect
 import com.android.immobilien.presentation.viewmodel.property.PropertyListEvent
-import com.android.immobilien.presentation.viewmodel.property.PropertyListViewModel
+import com.android.immobilien.presentation.viewmodel.property.PropertyViewModel
 
 @Suppress("ktlint:standard:function-naming")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PropertyScreen(
-    viewModel: PropertyListViewModel = hiltViewModel(),
+    viewModel: PropertyViewModel = hiltViewModel(),
     onItemClick: (Int) -> Unit,
 ) {
     val state by viewModel.state.collectAsState()

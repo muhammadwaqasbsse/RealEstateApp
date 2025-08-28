@@ -1,5 +1,6 @@
 package com.android.immobilien.di
 
+import com.android.immobilien.data.remote.NetworkConfig.BASE_URL
 import com.android.immobilien.data.remote.PropertyApi
 import com.squareup.moshi.Moshi
 import dagger.Module
@@ -15,8 +16,6 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
-    private const val BASE_URL = "https://gsl-apps-technical-test.dignp.com/"
-
     @Provides
     @Singleton
     fun provideLoggingInterceptor(): HttpLoggingInterceptor =
